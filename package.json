@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node app/index.js",
     "dev": "nodemon app/index.js"
   },
   "author": "WayneChu",
@@ -13,6 +14,7 @@
   },
   "dependencies": {
     "express": "^4.17.1",
-    "http": "0.0.0"
+    "http": "0.0.0",
+    "mongodb": "^3.4.0"
   }
 }
