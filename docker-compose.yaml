@@ -1,0 +1,35 @@
+version: "3"
+
+services:
+  linelogin-mongo:
+    image: mongo:latest
+    restart: always
+    expose:
+      - 27017
+    ports:
+      - "27018:27017"
+    networks:
+      - backend
+  linelogin-nodejs:
+    build:
+      context: .
+      dockerfile: docker/nodejs/Dockerfile
+    environment:
+      - MONGO_HOST=linelogin-mongo
+      - MONGO_PORT=27017
+
+    restart: always
+    volumes:
+      - "mongo_data:/data/db"
+    ports:
+      - "7003:7003"
+    entrypoint: /entrypoint.sh -c 'yarn start';
+    links:
+      - linelogin-mongo
+    networks:
+      - backend
+volumes:
+  mongo_data:
+    driver: local
+networks:
+  backend:
