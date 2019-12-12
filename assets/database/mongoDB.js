@@ -8,7 +8,6 @@ module.exports = {
     module.exports.init(mongo);
     try {
       await module.exports.connect(mongo);
-      message.success(2, `MongoDB Port ${global.Database.MONGOPORT}`);
     } catch (err) {
       message.error(2, err);
     }
@@ -23,6 +22,7 @@ module.exports = {
       { useNewUrlParser: true },
       async (err, db) => {
         if (err) throw err;
+        message.success(2, `MongoDB Port ${global.Database.MONGOPORT}`);
         await module.exports.setValue(db);
         message.message("remind", `this is in mongoDB in ${value}`);
       }

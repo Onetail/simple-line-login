@@ -4,8 +4,6 @@ services:
   linelogin-mongo:
     image: mongo:latest
     restart: always
-    expose:
-      - 27017
     ports:
       - "27018:27017"
     networks:
@@ -17,6 +15,7 @@ services:
     environment:
       - MONGO_HOST=linelogin-mongo
       - MONGO_PORT=27017
+      - SERVER_PORT=7003
 
     restart: always
     volumes:

@@ -1,6 +1,6 @@
 module.exports = {
   Server: {
-    SERVERHTTPPORT: 8501,
+    SERVERHTTPPORT: process.env.SERVER_PORT || 8501,
     SERVERHTTPSPORT: 443
   },
 
@@ -10,6 +10,6 @@ module.exports = {
     DATABASEUSER: "root",
     DATABASEPASSWORD: process.env.MYSQL_ROOT_PASSWORD || "root",
     MYSQLDATABASENAME: "ServerModel",
-    MONGOPORT: 27017
+    MONGOPORT: process.env.MONGO_PORT || 27017
   }
 };
