@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no"
+    />
+    <meta name="MobileOptimized" content="320" />
+    <meta
+      name="format-detection"
+      content="telephone=no, address=no, email=no"
+    />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+
+    <title>LineLogin</title>
+    <style>
+      @charset "UTF-8";
+      html {
+        font-family: sans-serif;
+        -ms-text-size-adjust: 100%;
+        -webkit-text-size-adjust: 100%;
+      }
+
+      body {
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      body,
+      button,
+      input,
+      select,
+      textarea {
+        font: 400 12px/1.5 "Lantinghei SC", "Microsoft Yahei",
+          "Hiragino Sans GB", "Microsoft Sans Serif", "WenQuanYi Micro Hei",
+          sans-serif;
+      }
+
+      input,
+      textarea {
+        line-height: normal;
+        font-family: "Microsoft Yahei", tahoma, Arail, "Hiragino Sans GB",
+          "Microsoft Sans Serif", "WenQuanYi Micro Hei", sans-serif;
+      }
+
+      body,
+      dl,
+      dt,
+      dd,
+      ul,
+      ol,
+      li,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      pre,
+      code,
+      form,
+      fieldset,
+      legend,
+      input,
+      textarea,
+      p,
+      blockquote,
+      th,
+      td,
+      hr,
+      button,
+      article,
+      aside,
+      details,
+      figcaption,
+      figure,
+      footer,
+      header,
+      menu,
+      nav,
+      section {
+        margin: 0;
+        padding: 0;
+      }
+
+      article,
+      aside,
+      details,
+      figcaption,
+      figure,
+      footer,
+      header,
+      hgroup,
+      main,
+      menu,
+      nav,
+      section,
+      summary {
+        display: block;
+      }
+
+      @media screen and (min-width: 1024px) {
+        .container-login {
+          margin: 0 auto;
+          width: 100%;
+        }
+        .login-status-frame {
+          margin-top: 1rem;
+          height: 2.5rem;
+          padding-left: 30%;
+          padding-right: 30%;
+          font-size: 16px;
+        }
+        .login-3rd-party > div > div {
+          display: inline-block;
+        }
+
+        .login-detail-input-password > input[type="password"],
+        .login-detail-input-email > input[type="email"] {
+          border: 0px;
+          width: 80%;
+          height: 3rem;
+          margin: 3px;
+          margin-left: 30px;
+          /*margin-left: 6rem;*/
+          padding: 3px;
+          font-size: 18px;
+        }
+
+        .login-detail-input-email {
+          border: 1px solid #a1a1a1;
+          border-radius: 5px;
+          width: 60%;
+          margin-left: auto;
+          margin-right: auto;
+          background: url(/assets/email.png) left center no-repeat;
+          background-size: contain;
+          /*background: url(/wp-content/uploads/email_0.png) center center no-repeat;
+                background-size: 75% 100%;
+                height: 4rem;
+                display: inline;
+                border-width: 1.5px;
+                border-style: solid;
+                border-color: rgb(158, 158, 158);
+                border-radius: 10px;
+                padding: 1.5rem;
+                position: relative; */
+        }
+        .login-detail-input-password {
+          border: 1px solid #a1a1a1;
+          border-radius: 5px;
+          width: 60%;
+          margin-left: auto;
+          margin-right: auto;
+          background: url(/assets/password.jpeg) left center no-repeat;
+          background-size: contain;
+          /*background: url(/wp-content/uploads/key_0.png) center center no-repeat;
+                background-size: 75% 100%;
+                height: 4rem;
+                display: inline;
+                border-width: 1.5px;
+                border-style: solid;
+                border-color: rgb(158, 158, 158);
+                border-radius: 10px;
+                padding: 1.5rem;
+                position: relative; */
+        }
+
+        .fb-login-button {
+          bottom: 3px;
+        }
+      }
+
+      @media screen and (max-width: 1024px) {
+        .container {
+          margin: 0 auto;
+          width: 100%;
+          height: 500px;
+          overflow: scroll;
+        }
+        .login-status-frame {
+          margin-top: 1.5rem;
+          height: 2.5rem;
+          padding-left: 1rem;
+          padding-right: 1rem;
+          font-size: 16px;
+        }
+        .login-3rd-party > div > div {
+          margin: 0 auto;
+          text-align: center;
+        }
+        .login-detail-input-password > input[type="password"],
+        .login-detail-input-email > input[type="email"] {
+          border: 0px;
+          width: 80%;
+          height: 3rem;
+          margin: 3px;
+          margin-left: 4rem;
+          padding: 3px;
+          font-size: 16px;
+        }
+
+        .login-detail-input-email {
+          border: 1px solid #a1a1a1;
+          border-radius: 5px;
+          width: 95%;
+          margin-left: auto;
+          margin-right: auto;
+          background: url(/assets/email.png) left center no-repeat;
+          background-size: contain;
+          /*background: url(/wp-content/uploads/email_0.png) center center no-repeat;
+                background-size: 90% 100%;
+                height: 4rem;
+                display: inline;
+                border-width: 1.5px;
+                border-style: solid;
+                border-color: rgb(158, 158, 158);
+                border-radius: 10px;
+                padding: 1.5rem;
+                position: relative; */
+        }
+        .login-detail-input-password {
+          border: 1px solid #a1a1a1;
+          border-radius: 5px;
+          width: 95%;
+          margin-left: auto;
+          margin-right: auto;
+          background: url(/assets/password.jpeg) left center no-repeat;
+          background-size: contain;
+          /*background: url(/wp-content/uploads/key_0.png) center center no-repeat;
+                background-size: 90% 100%;
+                height: 4rem;
+                display: inline;
+                border-width: 1.5px;
+                border-style: solid;
+                border-color: rgb(158, 158, 158);
+                border-radius: 10px;
+                padding: 1.5rem;
+                position: relative; */
+        }
+        .login-detail-input img {
+          border-radius: 8px 0 0 8px;
+          width: 50px;
+        }
+        .login-3rd-party-frame {
+          display: flex;
+        }
+      }
+
+      .login-page {
+        /*margin-top: .1rem;
+            padding: 10px;*/
+      }
+
+      .login-page-title {
+        display: inline-block;
+        background-color: black;
+        width: 100%;
+      }
+
+      .login-page-title-frame {
+        padding: 1rem;
+      }
+
+      .login-page-title-frame > img {
+        vertical-align: middle;
+      }
+
+      .login-page-title-frame > span {
+        padding-left: 3px;
+        font-size: 1rem;
+        color: white;
+      }
+
+      .login-page-content {
+        background-color: white;
+        padding: 5px;
+      }
+
+      .login-detail {
+        margin-top: 1rem;
+        text-align: center;
+      }
+
+      .login-detail > form > p {
+        font-size: 18px;
+        font-weight: bold;
+      }
+
+      /* .login-detail-input>img {
+            vertical-align: middle;
+            background-color: bisque;
+            position: absolute; 
+            height: 100%;
+            width: 60;
+        } */
+
+      .login-detail-frame {
+        margin-top: 1rem;
+        padding: 1rem;
+        /* position: relative; */
+      }
+
+      .login-status-inline {
+        display: inline;
+      }
+
+      .login-status-password {
+        float: left;
+      }
+
+      .login-status-password > a {
+        color: red;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      .login-status-password > a:active {
+        text-decoration: underline;
+      }
+
+      .login-status-rememberme {
+        float: right;
+      }
+
+      .login-btn > input[type="submit"] {
+        width: 50%;
+        -moz-box-shadow: 0px 0px 0px 0px #ffba52;
+        -webkit-box-shadow: 0px 0px 0px 0px #ffba52;
+        box-shadow: 0px 0px 0px 0px #ffba52;
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#faa55a', endColorstr='#ffffff', GradientType=0);
+        background-color: #ffb87d;
+        -moz-border-radius: 10px;
+        -webkit-border-radius: 10px;
+        border-radius: 10px;
+        border: 1px solid #ffffff;
+        display: inline-block;
+        cursor: pointer;
+        color: #ffffff;
+        font-family: Arial;
+        font-size: 18px;
+        padding: 1rem;
+        text-decoration: none;
+        text-shadow: 0px 1px 0px #ffd500;
+      }
+
+      .login-btn > input[type="submit"]:hover {
+        background-color: #ff7900;
+      }
+
+      .login-btn > input[type="submit"]:active {
+        position: relative;
+        top: 1px;
+      }
+
+      .login-3rd-party {
+        margin-top: 1rem;
+        text-align: center;
+      }
+
+      .login-3rd-party > p {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 1rem;
+      }
+
+      .line-signin {
+        /* background: url(/wp-content/uploads/line_login_base.png) auto auto no-repeat; */
+        background-image: url("/assets/line.png");
+        background-repeat: no-repeat;
+        width: 250px;
+        height: 40px;
+      }
+
+      .line-signin:hover {
+        background-image: url(/wp-content/uploads/line-login-hover.png);
+      }
+
+      .line-signin:active {
+        background-image: url(/wp-content/uploads/line-login-hover.png);
+      }
+
+      .login-detail-input img {
+        border-radius: 8px 0 0 8px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+    <div class="container-login">
+      <div class="login-page">
+        <div class="login-page-title">
+          <div class="login-page-title-frame">
+            <img
+              src="/assets/icon.png"
+              width="30"
+              height="30"
+              style="background: white;"
+            />
+          </div>
+        </div>
+        <div class="login-page-content">
+          <div class="login-detail">
+            <form action="/login-post" method="POST" name="loginForm">
+              <p>E-mail 帳號登入</p>
+
+              <div class="login-detail-frame">
+                <div class="login-detail-input-email">
+                  <!-- <img src="/wp-content/uploads/email.png"> -->
+                  <input
+                    type="email"
+                    placeholder="E-mail"
+                    id="login-email"
+                    name="login_email"
+                  />
+                </div>
+              </div>
+              <div class="login-detail-frame">
+                <div class="login-detail-input-password">
+                  <!-- <img src="/wp-content/uploads/key.png" > -->
+                  <input
+                    type="password"
+                    placeholder="密碼"
+                    id="login-password"
+                    name="login_password"
+                    pattern="[0-9A-Za-z]{6,}"
+                    title="請檢查是否符合數字與英文單字，數量6以上"
+                  />
+                </div>
+              </div>
+              <div class="login-status-frame">
+                <div class="login-status-inline login-status-password">
+                  <a
+                    href="#"
+                    onclick="alert('請您到手機上進行[忘記密碼]的操作!謝謝')"
+                    >忘記密碼?</a
+                  >
+                </div>
+                <div class="login-status-inline login-status-rememberme">
+                  <input
+                    type="checkbox"
+                    name="rememberme"
+                    value="保持登入狀態"
+                    checked
+                  />保持登入狀態
+                </div>
+                <!-- <div style="clear:both;"></div> -->
+              </div>
+              <input
+                type="text"
+                name="login_3rd_id"
+                id="login-3rd-id"
+                style="display: none"
+              />
+              <input
+                type="text"
+                name="login_3rd_token"
+                id="login-3rd-token"
+                style="display: none"
+              />
+              <input
+                type="text"
+                name="login_3rd_status"
+                id="login-3rd-status"
+                style="display: none"
+              />
+              <div class="login-btn">
+                <input type="submit" value="登入" onclick="userLogin()" />
+                <!-- <input type="submit" value="登入"> -->
+              </div>
+            </form>
+          </div>
+          <div class="login-3rd-party">
+            <p>以其他方式登入:</p>
+            <div style="margin: 0px 25px 10px;" class="login-3rd-party-frame">
+              <div class="login-line" style="width: 6rem;">
+                <!-- <div class="line-signin" onclick="LineAuth()"></div> -->
+                <a href="#" onclick="LineAuth();">
+                  <img
+                    src="/assets/line.png"
+                    border="0"
+                    alt=""
+                    width="60px"
+                    height="60px"
+                  />
+                </a>
+                <script>
+                  function LineAuth() {
+                    var URL = "https://access.line.me/oauth2/v2.1/authorize?";
+                    URL += "response_type=code";
+                    URL += "&client_id=1653657241";
+                    URL +=
+                      "&redirect_uri=http://waynechu.synology.me:7003/result";
+                    URL += "&state=abcde";
+                    URL += "&scope=openid%20profile";
+                    window.location.href = URL;
+                  }
+                  // console.log(`<?php echo $_GET['code']; ?>`)
+                  // console.log(`<?php
+                  // if (isset($_GET['code']) && isset($_GET['state'])) {
+                  //     if ($_GET['state'] == 'abcde') {
+                  //         $line_data = array(
+                  //             "grant_type"        => "authorization_code",
+                  //             "code"  => $_GET['code'],
+                  //             "redirect_uri"    => "https://nsgs.happytomato.com.tw/",
+                  //             "client_id"        => "1653310852",
+                  //             "client_secret" => "84420cd165a301274500f93f1fe78123"
+                  //         );
+                  //         echo httpRequest("https://api.line.me/oauth2/v2.1/token", $line_data);
+
+                  //     }
+                  // }
+                  // ?>`)
+                </script>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      async function userLogin() {
+        await checkEmailCookieLogin();
+      }
+    </script>
+  </body>
+</html>
