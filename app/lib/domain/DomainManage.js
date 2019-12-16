@@ -1,4 +1,5 @@
-const app = require("express")();
+const express = require("express");
+const app = express();
 
 const bodyparser = require("body-parser");
 const path = require("path");
@@ -12,7 +13,7 @@ const message = require(path.join(
   __dirname,
   "../../../assets/message/MessageActivity"
 ));
-
+const appModule = require(path.join(__dirname, "./module/app.module.js"));
 const http = require("http").createServer(app);
 
 var server = {
@@ -21,14 +22,23 @@ var server = {
 };
 
 module.exports = {
-  exec: () => {
+  exec: async () => {
     app.use(bodyparser());
-    module.exports.databaseMethod();
+    await module.exports.defaultRoute();
+    await module.exports.databaseMethod();
+    await module.exports.createModuleMethod(app, mongoDB);
+  },
+
+  createModuleMethod: (app, mongoDB) => {
+    appModule.exec(app, mongoDB);
   },
 
   databaseMethod: () => {
     const mongo = require("mongodb");
     mongoDB.exec(mongo);
+  },
+  defaultRoute: () => {
+    app.use(express.static("html", { root: "/" }));
   },
 
   listen: () => {

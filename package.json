@@ -5,7 +5,15 @@
   "main": "index.js",
   "scripts": {
     "start": "node app/index.js",
-    "dev": "nodemon app/index.js"
+    "dev": "nodemon app/index.js",
+    "ct": "run(){ scripts/command.sh ct $1; }; run",
+    "controller": "scripts/command.sh ct",
+    "md": "scripts/command.sh md",
+    "middleware": "scripts/command.sh middleware",
+    "mo": "scripts/command.sh mo",
+    "module": "scripts/command.sh mo",
+    "sv": "scripts/command.sh sv",
+    "service": "scripts/command.sh service"
   },
   "author": "WayneChu",
   "license": "ISC",
@@ -13,7 +21,9 @@
     "nodemon": "^2.0.2"
   },
   "dependencies": {
+    "crypto": "^1.0.1",
     "express": "^4.17.1",
+    "express-jwt": "^5.3.1",
     "http": "0.0.0",
     "mongodb": "^3.4.0"
   }

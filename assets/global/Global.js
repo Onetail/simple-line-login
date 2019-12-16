@@ -1,7 +1,8 @@
 module.exports = {
   Server: {
     SERVERHTTPPORT: process.env.SERVER_PORT || 8501,
-    SERVERHTTPSPORT: 443
+    SERVERHTTPSPORT: 443,
+    JWTSECRET: "abc123"
   },
 
   Database: {
