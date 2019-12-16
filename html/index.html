@@ -408,7 +408,7 @@
         </div>
         <div class="login-page-content">
           <div class="login-detail">
-            <form action="/login-post" method="POST" name="loginForm">
+            <form action="/result.html" method="POST" name="loginForm">
               <p>E-mail 帳號登入</p>
 
               <div class="login-detail-frame">
@@ -472,7 +472,7 @@
                 style="display: none"
               />
               <div class="login-btn">
-                <input type="submit" value="登入" onclick="userLogin()" />
+                <input type="submit" value="登入" onclick="return false" />
                 <!-- <input type="submit" value="登入"> -->
               </div>
             </form>
@@ -497,27 +497,11 @@
                     URL += "response_type=code";
                     URL += "&client_id=1653657241";
                     URL +=
-                      "&redirect_uri=http://waynechu.synology.me:7003/result";
+                      "&redirect_uri=http://waynechu.synology.me:7003/result.html";
                     URL += "&state=abcde";
                     URL += "&scope=openid%20profile";
                     window.location.href = URL;
                   }
-                  // console.log(`<?php echo $_GET['code']; ?>`)
-                  // console.log(`<?php
-                  // if (isset($_GET['code']) && isset($_GET['state'])) {
-                  //     if ($_GET['state'] == 'abcde') {
-                  //         $line_data = array(
-                  //             "grant_type"        => "authorization_code",
-                  //             "code"  => $_GET['code'],
-                  //             "redirect_uri"    => "https://nsgs.happytomato.com.tw/",
-                  //             "client_id"        => "1653310852",
-                  //             "client_secret" => "84420cd165a301274500f93f1fe78123"
-                  //         );
-                  //         echo httpRequest("https://api.line.me/oauth2/v2.1/token", $line_data);
-
-                  //     }
-                  // }
-                  // ?>`)
                 </script>
               </div>
             </div>
@@ -525,10 +509,5 @@
         </div>
       </div>
     </div>
-    <script>
-      async function userLogin() {
-        await checkEmailCookieLogin();
-      }
-    </script>
   </body>
 </html>
