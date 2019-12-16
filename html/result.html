@@ -30,7 +30,7 @@
           url: "https://api.line.me/oauth2/v2.1/token",
           method: "POST",
           data: JSON.stringify(json),
-          dataType: "json",
+          contentType: "application/x-www-form-urlencoded",
           success: data => {
             console.log("\x1b[32m", "\n---- Debug ----\n");
             console.log("\x1b[36m", "data = ", data);
