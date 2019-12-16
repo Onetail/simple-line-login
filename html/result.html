@@ -14,24 +14,26 @@
     if (url.search) {
       const code = url.search.split("&")[0].split("=")[1];
       const state = url.search.split("&")[1].split("=")[1];
-      console.log("\x1b[32m", "\n---- Debug ----\n");
-      console.log("\x1b[36m", "code, state = ", code, state);
-      console.log("\x1b[32m", "\n---------------", "\x1b[0m");
-      if (state === "abcde") {
-        json = {
-          grant_type: "authorization_code",
-          code: code,
-          redirect_uri: "http://waynechu.synology.me:7003/result.html",
-          client_id: "1653657241",
-          client_secret: "6adfe090b8a66080e9988dca09e5bc27"
-        };
 
-        $.ajax({
+      if (state === "abcde") {
+        json = $.ajax({
           url: "https://api.line.me/oauth2/v2.1/token",
           method: "POST",
-          data: JSON.stringify(json),
-          contentType: "application/x-www-form-urlencoded",
+          data: {
+            grant_type: "authorization_code",
+            code: code,
+            redirect_uri: "http://waynechu.synology.me:7003/result.html",
+            client_id: "1653657241",
+            client_secret: "6adfe090b8a66080e9988dca09e5bc27"
+          },
+          dataType: "json",
+          contentType: "application/x-www-form-urlencoded; charset=UTF-8",
           success: data => {
+            console.log("\x1b[32m", "\n---- Debug ----\n");
+            console.log("\x1b[36m", "data = ", data);
+            console.log("\x1b[32m", "\n---------------", "\x1b[0m");
+          },
+          error: data => {
             console.log("\x1b[32m", "\n---- Debug ----\n");
             console.log("\x1b[36m", "data = ", data);
             console.log("\x1b[32m", "\n---------------", "\x1b[0m");
