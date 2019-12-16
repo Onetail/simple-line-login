@@ -20,7 +20,7 @@ module.exports = {
         (err, result) => {
           if (err) throw err;
           if (result === null) res.send(false);
-          else res.send(true);
+          else res.send(result);
         }
       );
   }

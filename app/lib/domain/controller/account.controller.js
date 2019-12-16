@@ -1,3 +1,5 @@
+const service = require("../service/account.service");
+
 module.exports = {
   exec: app => {
     module.exports.domain(app);
@@ -6,7 +8,7 @@ module.exports = {
     app.post("/login", (req, res) => {
       const { account, password } = req.body;
 
-      res.send("ok");
+      res.send(service.checkAccountAndPassword(account, password));
     });
   }
 };

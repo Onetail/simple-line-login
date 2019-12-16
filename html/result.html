@@ -3,8 +3,28 @@
     <meta charset="utf-8" />
     <meta name="renderer" content="webkit" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <style>
+      .root-table {
+        text-align: center;
+        margin-top: 3rem;
+      }
+      input {
+        font-size: 22px;
+        background: #fee;
+        margin-top: 10px;
+      }
+    </style>
   </head>
   <body>
+    <div class="root-table">
+      <div>
+        店家名稱: <input type="text" value="" id="name" /><br />
+        店家地址: <input type="text" value="" id="address" /><br />
+        店家電話: <input type="text" value="" id="phone" /><br />
+        店家負責人: <input type="text" value="" id="principal" /><br />
+      </div>
+      <table></table>
+    </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   </body>
 </html>
@@ -29,9 +49,23 @@
           dataType: "json",
           contentType: "application/x-www-form-urlencoded; charset=UTF-8",
           success: data => {
+            const payload = JSON.parse(atob(data.id_token.split(".")[1]));
             console.log("\x1b[32m", "\n---- Debug ----\n");
-            console.log("\x1b[36m", "data = ", data);
+            console.log("\x1b[36m", "payload = ", payload);
             console.log("\x1b[32m", "\n---------------", "\x1b[0m");
+            $.ajax({
+              url: "http://waynechu.synology.me:7003/login",
+              method: "POST",
+              data: {
+                account: data.access_token,
+                password: payload
+              },
+              success: result => {
+                console.log("\x1b[32m", "\n---- Debug ----\n");
+                console.log("\x1b[36m", "result = ", result);
+                console.log("\x1b[32m", "\n---------------", "\x1b[0m");
+              }
+            });
           },
           error: data => {
             console.log("\x1b[32m", "\n---- Debug ----\n");
