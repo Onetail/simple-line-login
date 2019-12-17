@@ -163,7 +163,7 @@
         principal: principal
       },
       dataType: "json",
-      contentType: "application/json",
+      contentType: "application/x-www-form-urlencoded; charset=UTF-8",
       success: async data => {
         await cleanTable()
         await showTable()
