@@ -20,7 +20,9 @@ controller() {
   else
     echo "Creating $FLODERPATH$Controller$FILENAME.controller.js"
     touch $FLODERPATH$Controller$FILENAME".controller.js" 
-    echo "module.exports = {
+    echo "
+const service = require('../service/${FILENAME}.service');
+module.exports = {
     exec: app => { module.exports.domain(app) },
     domain: app => { 
         /*
@@ -37,8 +39,8 @@ controller() {
         sed -i '' -e "1i\ 
 const ${FILENAME}Controller = require('../controller/$FILENAME.controller.js') " "$FLODERPATH$Module$FILENAME.module.js"
         echo "use $FILENAME.exec "
-        sed -i '' -e "/domain: (app, mongoDB) => {/a\\
-\ \ \ \ ${FILENAME}Controller.exec(app) " "$FLODERPATH$Module$FILENAME.module.js"
+        sed -i '' -e "/controller: app => {/a\\
+\ \ \ \ ${FILENAME}Controller.exec(app);" "$FLODERPATH$Module$FILENAME.module.js"
       fi
 
   fi
@@ -72,8 +74,8 @@ middleware() {
         sed -i '' -e "1i\ 
 const ${FILENAME}Middleware = require('../middleware/$FILENAME.middleware.js') " "$FLODERPATH$Module$FILENAME.module.js"
         echo "use $FILENAME.exec "
-        sed -i '' -e "/domain: (app, mongoDB) => {/a\\
-\ \ \ \ ${FILENAME}Middleware.exec(app) " "$FLODERPATH$Module$FILENAME.module.js"
+        sed -i '' -e "/middleware: app => {/a\\
+\ \ \ \ ${FILENAME}Middleware.exec(app);" "$FLODERPATH$Module$FILENAME.module.js"
       fi
   fi
   echo "${NC}"
@@ -86,12 +88,26 @@ module() {
   else
     echo "Creating $FLODERPATH$Module$FILENAME.module.js"
     touch "$FLODERPATH$Module$FILENAME.module.js"
-    echo "module.exports = {
-    exec: (app, mongoDB) => { module.exports.domain(app, mongoDB) },
-    domain: (app, mongoDB) => { 
-      // use controller , middleware, service
-    }
-}
+    echo "
+module.exports = {
+  exec: (app, mongoDB) => {
+    module.exports.domain(app, mongoDB);
+  },
+  domain: async (app, mongoDB) => {
+    await module.exports.middleware(app);
+    await module.exports.controller(app);
+    await module.exports.service(app, mongoDB);
+  },
+  controller: app => {
+    
+  },
+  middleware: app => {
+    
+  },
+  service: (app, mongoDB) => {
+    
+  }
+};
       " > "$FLODERPATH$Module$FILENAME.module.js"
 
 
@@ -113,15 +129,14 @@ service() {
     echo "Creating $FLODERPATH$Service$FILENAME.service.js"
     touch $FLODERPATH$Service$FILENAME".service.js" 
     echo "
+var mongo = "";
 module.exports = {
-    exec: app => { module.exports.domain(app) },
-    domain: app => { 
-        /*
-        * app.get('/', (req, res, next) => {
-        *   next(); 
-        * }) 
-        */
-    }
+  exec: async (app, mongoDB) => {
+    await module.exports.initializeValue(mongoDB);
+  },
+  initializeValue: mongoDB => {
+    mongo = mongoDB.getValue();
+  },
 }
       " > $FLODERPATH$Service$FILENAME".service.js"
 
@@ -131,8 +146,8 @@ module.exports = {
         sed -i '' -e "1i\ 
 const ${FILENAME}Service = require('../service/$FILENAME.service.js') " "$FLODERPATH$Module$FILENAME.module.js"
         echo "use $FILENAME.exec "
-        sed -i '' -e "/domain: (app, mongoDB) => {/a\\
-      \ \ \ \ ${FILENAME}Service.exec(app, mongoDB) " "$FLODERPATH$Module$FILENAME.module.js"
+        sed -i '' -e "/service: (app, mongoDB) => {\\
+      \ \ \ \ ${FILENAME}Service.exec(app, mongoDB);" "$FLODERPATH$Module$FILENAME.module.js"
       fi
   fi
   echo "${NC}"
