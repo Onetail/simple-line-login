@@ -22,8 +22,9 @@
         店家地址: <input type="text" value="" id="address" /><br />
         店家電話: <input type="text" value="" id="phone" /><br />
         店家負責人: <input type="text" value="" id="principal" /><br />
+        <input type="button" value="新增" id="insert" onClick="" />
       </div>
-      <table></table>
+      <table id="table"></table>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   </body>
@@ -50,15 +51,12 @@
           contentType: "application/x-www-form-urlencoded; charset=UTF-8",
           success: data => {
             const payload = JSON.parse(atob(data.id_token.split(".")[1]));
-            console.log("\x1b[32m", "\n---- Debug ----\n");
-            console.log("\x1b[36m", "payload = ", payload);
-            console.log("\x1b[32m", "\n---------------", "\x1b[0m");
             $.ajax({
               url: "http://waynechu.synology.me:7003/login",
               method: "POST",
               data: {
                 account: data.access_token,
-                password: payload
+                password: payload.sub
               },
               success: result => {
                 console.log("\x1b[32m", "\n---- Debug ----\n");

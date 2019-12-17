@@ -5,7 +5,7 @@ var value;
 
 module.exports = {
   exec: async mongo => {
-    module.exports.init(mongo);
+    await module.exports.init(mongo);
     try {
       await module.exports.connect(mongo);
     } catch (err) {

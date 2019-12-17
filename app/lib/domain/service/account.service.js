@@ -1,5 +1,5 @@
 const table = "users";
-let mongo = "";
+var mongo = "";
 let Database_Name = "LineLogin";
 module.exports = {
   exec: async (app, mongoDB) => {
@@ -9,19 +9,21 @@ module.exports = {
     mongo = mongoDB.getValue();
   },
   checkAccountAndPassword: (account, password) => {
-    mongo
+    return mongo
       .db(Database_Name)
       .collection(table)
-      .findOne(
-        {
-          account: account,
-          password: password
-        },
-        (err, result) => {
-          if (err) throw err;
-          if (result === null) res.send(false);
-          else res.send(result);
-        }
-      );
+      .findOne({
+        account: account,
+        password: password
+      });
+  },
+  insertOne: (account, password) => {
+    return mongo
+      .db(Database_Name)
+      .collection(table)
+      .insertOne({
+        account: account,
+        password: password
+      });
   }
 };

@@ -24,18 +24,21 @@ var server = {
 module.exports = {
   exec: async () => {
     app.use(bodyparser());
-    await module.exports.defaultRoute();
     await module.exports.databaseMethod();
-    await module.exports.createModuleMethod(app, mongoDB);
+
+    setTimeout(() => {
+      module.exports.defaultRoute();
+      module.exports.createModuleMethod(app, mongoDB);
+    }, 1000);
   },
 
   createModuleMethod: (app, mongoDB) => {
     appModule.exec(app, mongoDB);
   },
 
-  databaseMethod: () => {
+  databaseMethod: async () => {
     const mongo = require("mongodb");
-    mongoDB.exec(mongo);
+    await mongoDB.exec(mongo);
   },
   defaultRoute: () => {
     app.use(express.static("html", { root: "/" }));

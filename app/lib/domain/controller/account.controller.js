@@ -5,10 +5,17 @@ module.exports = {
     module.exports.domain(app);
   },
   domain: app => {
-    app.post("/login", (req, res) => {
+    app.post("/login", async (req, res) => {
       const { account, password } = req.body;
 
-      res.send(service.checkAccountAndPassword(account, password));
+      const isExist = await service.checkAccountAndPassword(account, password);
+      if (!isExist) {
+        await service.insertOne(account, password);
+        const result = await service.checkAccountAndPassword(account, password);
+        res.send(result);
+      } else {
+        res.send(isExist);
+      }
     });
   }
 };

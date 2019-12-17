@@ -1,6 +1,3 @@
-const jwt = require("express-jwt");
-const global = require("../../../../assets/global/Global");
-
 module.exports = {
   exec: app => {
     module.exports.domain(app);
