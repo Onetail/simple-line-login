@@ -108,7 +108,7 @@
   })();
   function showTable() {
     $.ajax({
-      url: "http://localhost:8501/shop",
+      url: "http://waynechu.synology.me:7003/shop",
       method: "GET",
       dataType: "json",
       contentType: "application/x-www-form-urlencoded; charset=UTF-8",
@@ -154,7 +154,7 @@
     const phone = await document.getElementById("phone").value
     const principal = await document.getElementById("principal").value
     $.ajax({
-      url: "http://localhost:8501/shop",
+      url: "http://waynechu.synology.me:7003/shop",
       method: "POST",
       data: {
         name: name,
@@ -180,7 +180,7 @@
     const phone = await document.getElementById("phone").value
     const principal = await document.getElementById("principal").value
     $.ajax({
-      url: `http://localhost:8501/shop/${id}`,
+      url: `http://waynechu.synology.me:7003/shop/${id}`,
       method: "PUT",
       data: {
         name: name,
@@ -212,7 +212,7 @@
     const phone = await document.getElementById("phone").value
     const principal = await document.getElementById("principal").value
     $.ajax({
-      url: `http://localhost:8501/shop/${id}`,
+      url: `http://waynechu.synology.me:7003/shop/${id}`,
       method: "DELETE",
       dataType: "json",
       contentType: "application/x-www-form-urlencoded; charset=UTF-8",
