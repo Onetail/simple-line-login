@@ -129,7 +129,7 @@ service() {
     echo "Creating $FLODERPATH$Service$FILENAME.service.js"
     touch $FLODERPATH$Service$FILENAME".service.js" 
     echo "
-var mongo = "";
+var mongo = '';
 module.exports = {
   exec: async (app, mongoDB) => {
     await module.exports.initializeValue(mongoDB);
