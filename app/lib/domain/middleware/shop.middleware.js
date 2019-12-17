@@ -10,12 +10,7 @@ module.exports = {
      */
     app.post("/shop", async (req, res, next) => {
       const { name, phone, address, principal } = req.body;
-      if (
-        name === undefined ||
-        phone === undefined ||
-        address === undefined ||
-        principal === undefined
-      ) {
+      if (!name || !phone || !address || !principal) {
         res.status(400).send({ error: "Bad request!" });
       } else {
         next();
@@ -27,12 +22,7 @@ module.exports = {
       if (id === undefined) {
         throw res.status(400).send({ error: "Bad request!" });
       }
-      if (
-        name === undefined &&
-        phone === undefined &&
-        address === undefined &&
-        principal === undefined
-      ) {
+      if (!name && !phone && !address && !principal) {
         res.status(400).send({ error: "Bad request!" });
       } else {
         next();

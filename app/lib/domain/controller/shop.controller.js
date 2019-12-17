@@ -24,7 +24,7 @@ module.exports = {
       };
       const result = await service.updateOne(id, dto);
 
-      res.send(result.upsertedId);
+      res.send("ok");
     });
     app.delete("/shop/:id", async (req, res) => {
       const { id } = req.params;

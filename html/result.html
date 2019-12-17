@@ -13,6 +13,17 @@
         background: #fee;
         margin-top: 10px;
       }
+      table {
+        margin: 0 auto;
+        margin-top: 3rem;
+        font-size: 24px;
+      }
+      td {
+        width: 10rem;
+      }
+      button {
+        font-size: 20px;
+      }
     </style>
   </head>
   <body>
@@ -22,9 +33,23 @@
         店家地址: <input type="text" value="" id="address" /><br />
         店家電話: <input type="text" value="" id="phone" /><br />
         店家負責人: <input type="text" value="" id="principal" /><br />
-        <input type="button" value="新增" id="insert" onClick="" />
+        <input type="button" value="新增" id="insert" onClick="addColumn()" />
+        
       </div>
-      <table id="table"></table>
+      <table >
+        <th>
+        <td>編號</td>
+        <td>店家名稱</td>
+        <td>店家地址</td>
+        <td>店家電話</td>
+        <td>店家負責人</td>
+        <td></td>
+        <td></td>
+        </th>
+      </table>
+      <table id="table">
+          <th id="controller"></th>
+      </table>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   </body>
@@ -59,20 +84,155 @@
                 password: payload.sub
               },
               success: result => {
-                console.log("\x1b[32m", "\n---- Debug ----\n");
-                console.log("\x1b[36m", "result = ", result);
-                console.log("\x1b[32m", "\n---------------", "\x1b[0m");
+                
+                $.ajax({
+                  url: "http://waynechu.synology.me:7003/shop",
+                  method: "GET",
+                  dataType: "json",
+                  contentType:
+                    "application/x-www-form-urlencoded; charset=UTF-8",
+                  success: data => {
+                    showTable();
+                  }
+                });
               }
             });
           },
           error: data => {
-            console.log("\x1b[32m", "\n---- Debug ----\n");
-            console.log("\x1b[36m", "data = ", data);
-            console.log("\x1b[32m", "\n---------------", "\x1b[0m");
+            
           }
         });
       }
     } else {
     }
   })();
+  function showTable() {
+    $.ajax({
+      url: "http://localhost:8501/shop",
+      method: "GET",
+      dataType: "json",
+      contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+      success: data => {
+        var table = document.getElementById("table");
+
+        var controller = document.getElementById("controller");
+
+        for (let i = data.length - 1; i >= 0; i--) {
+          var row = document.createElement("tr");
+          row.id = "dataRow";
+          row.class = "dataRow";
+
+          var id = row.insertCell(0);
+          var name = row.insertCell(1);
+          var address = row.insertCell(2);
+          var phone = row.insertCell(3);
+          var principal = row.insertCell(4);
+          var changeData = row.insertCell(5);
+          var deleteData = row.insertCell(6);
+
+          id.innerHTML = i + 1;
+          name.innerHTML = data[i].shopName;
+          address.innerHTML = data[i].shopAddress;
+          phone.innerHTML = data[i].shopPhone;
+          principal.innerHTML = data[i].shopPrincipal;
+          changeData.innerHTML = `<button id='${data[i]._id}' onClick='modifyColumn("${data[i]._id}")' >修改</button>`
+          deleteData.innerHTML = `<button id='${data[i]._id}' onClick='deleteColumn("${data[i]._id}")' >刪除</button>`
+          controller.appendChild(row);
+        }
+
+        table.appendChild(controller);
+      }
+    });
+  }
+  function cleanTable() {
+    document.getElementById("controller").innerHTML = "";
+    // body.deleteRow(1);
+  }
+  async function addColumn(){
+    const name = await document.getElementById("name").value
+    const address = await document.getElementById("address").value
+    const phone = await document.getElementById("phone").value
+    const principal = await document.getElementById("principal").value
+    $.ajax({
+      url: "http://localhost:8501/shop",
+      method: "POST",
+      data: {
+        name: name,
+        address: address,
+        phone: phone,
+        principal: principal
+      },
+      dataType: "json",
+      contentType: "application/json",
+      success: async data => {
+        await cleanTable()
+        await showTable()
+      },
+      error: data => {
+        alert(data.responseText)
+      }
+    });
+  }
+  async function modifyColumn(id){
+    
+    const name = await document.getElementById("name").value
+    const address = await document.getElementById("address").value
+    const phone = await document.getElementById("phone").value
+    const principal = await document.getElementById("principal").value
+    $.ajax({
+      url: `http://localhost:8501/shop/${id}`,
+      method: "PUT",
+      data: {
+        name: name,
+        address: address,
+        phone: phone,
+        principal: principal
+      },
+      dataType: "json",
+      contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+      success: async data => {
+        
+        await cleanTable()
+        await showTable()
+      },
+      error: async data => {
+        
+        if(data.responseText !== 'ok') {
+          alert(data.responseText)
+        }else {
+          await cleanTable()
+          await showTable()
+        }
+      }
+    });
+  }
+  async function deleteColumn(id){
+    const name = await document.getElementById("name").value
+    const address = await document.getElementById("address").value
+    const phone = await document.getElementById("phone").value
+    const principal = await document.getElementById("principal").value
+    $.ajax({
+      url: `http://localhost:8501/shop/${id}`,
+      method: "DELETE",
+      dataType: "json",
+      contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+      success: async data => {
+
+        await cleanTable()
+        await showTable()
+      },
+      error: async data => {
+        
+        if (data.responseText !== 'ok') {
+          alert(data.responseText)
+        } else {
+          await cleanTable()
+          await showTable()
+        }
+      }
+    });
+  }
+  
+  
+  
 </script>
